@@ -1,0 +1,1059 @@
+{
+  "nodes": [
+    {
+      "id": "pdfFile_0",
+      "position": {
+        "x": -775,
+        "y": -725
+      },
+      "type": "customNode",
+      "data": {
+        "id": "pdfFile_0",
+        "label": "Pdf File",
+        "version": 2,
+        "name": "pdfFile",
+        "type": "Document",
+        "baseClasses": [
+          "Document"
+        ],
+        "category": "Document Loaders",
+        "description": "Load data from PDF files",
+        "inputParams": [
+          {
+            "label": "Pdf File",
+            "name": "pdfFile",
+            "type": "file",
+            "fileType": ".pdf",
+            "id": "pdfFile_0-input-pdfFile-file",
+            "display": true
+          },
+          {
+            "label": "Usage",
+            "name": "usage",
+            "type": "options",
+            "options": [
+              {
+                "label": "One document per page",
+                "name": "perPage"
+              },
+              {
+                "label": "One document per file",
+                "name": "perFile"
+              }
+            ],
+            "default": "perPage",
+            "id": "pdfFile_0-input-usage-options",
+            "display": true
+          },
+          {
+            "label": "Use Legacy Build",
+            "name": "legacyBuild",
+            "type": "boolean",
+            "optional": true,
+            "additionalParams": true,
+            "id": "pdfFile_0-input-legacyBuild-boolean",
+            "display": true
+          },
+          {
+            "label": "Additional Metadata",
+            "name": "metadata",
+            "type": "json",
+            "description": "Additional metadata to be added to the extracted documents",
+            "optional": true,
+            "additionalParams": true,
+            "id": "pdfFile_0-input-metadata-json",
+            "display": true
+          },
+          {
+            "label": "Omit Metadata Keys",
+            "name": "omitMetadataKeys",
+            "type": "string",
+            "rows": 4,
+            "description": "Each document loader comes with a default set of metadata keys that are extracted from the document. You can use this field to omit some of the default metadata keys. The value should be a list of keys, seperated by comma. Use * to omit all metadata keys execept the ones you specify in the Additional Metadata field",
+            "placeholder": "key1, key2, key3.nestedKey1",
+            "optional": true,
+            "additionalParams": true,
+            "id": "pdfFile_0-input-omitMetadataKeys-string",
+            "display": true
+          }
+        ],
+        "inputAnchors": [
+          {
+            "label": "Text Splitter",
+            "name": "textSplitter",
+            "type": "TextSplitter",
+            "optional": true,
+            "id": "pdfFile_0-input-textSplitter-TextSplitter",
+            "display": true
+          }
+        ],
+        "inputs": {
+          "textSplitter": "{{recursiveCharacterTextSplitter_0.data.instance}}",
+          "usage": "perPage",
+          "legacyBuild": "",
+          "metadata": "",
+          "omitMetadataKeys": ""
+        },
+        "outputAnchors": [
+          {
+            "name": "output",
+            "label": "Output",
+            "type": "options",
+            "description": "Array of document objects containing metadata and pageContent",
+            "options": [
+              {
+                "id": "pdfFile_0-output-document-Document|json",
+                "name": "document",
+                "label": "Document",
+                "description": "Array of document objects containing metadata and pageContent",
+                "type": "Document | json"
+              },
+              {
+                "id": "pdfFile_0-output-text-string|json",
+                "name": "text",
+                "label": "Text",
+                "description": "Concatenated string from pageContent of documents",
+                "type": "string | json"
+              }
+            ],
+            "default": "document"
+          }
+        ],
+        "outputs": {
+          "output": "document"
+        },
+        "selected": false
+      },
+      "width": 300,
+      "height": 542,
+      "selected": false,
+      "positionAbsolute": {
+        "x": -775,
+        "y": -725
+      },
+      "dragging": false
+    },
+    {
+      "id": "recursiveCharacterTextSplitter_0",
+      "position": {
+        "x": -1150,
+        "y": -425
+      },
+      "type": "customNode",
+      "data": {
+        "id": "recursiveCharacterTextSplitter_0",
+        "label": "Recursive Character Text Splitter",
+        "version": 2,
+        "name": "recursiveCharacterTextSplitter",
+        "type": "RecursiveCharacterTextSplitter",
+        "baseClasses": [
+          "RecursiveCharacterTextSplitter",
+          "TextSplitter",
+          "BaseDocumentTransformer",
+          "Runnable"
+        ],
+        "category": "Text Splitters",
+        "description": "Split documents recursively by different characters - starting with \"\\n\\n\", then \"\\n\", then \" \"",
+        "inputParams": [
+          {
+            "label": "Chunk Size",
+            "name": "chunkSize",
+            "type": "number",
+            "description": "Number of characters in each chunk. Default is 1000.",
+            "default": 1000,
+            "optional": true,
+            "id": "recursiveCharacterTextSplitter_0-input-chunkSize-number",
+            "display": true
+          },
+          {
+            "label": "Chunk Overlap",
+            "name": "chunkOverlap",
+            "type": "number",
+            "description": "Number of characters to overlap between chunks. Default is 200.",
+            "default": 200,
+            "optional": true,
+            "id": "recursiveCharacterTextSplitter_0-input-chunkOverlap-number",
+            "display": true
+          },
+          {
+            "label": "Custom Separators",
+            "name": "separators",
+            "type": "string",
+            "rows": 4,
+            "description": "Array of custom separators to determine when to split the text, will override the default separators",
+            "placeholder": "[\"|\", \"##\", \">\", \"-\"]",
+            "additionalParams": true,
+            "optional": true,
+            "id": "recursiveCharacterTextSplitter_0-input-separators-string",
+            "display": true
+          }
+        ],
+        "inputAnchors": [],
+        "inputs": {
+          "chunkSize": "1000",
+          "chunkOverlap": "200",
+          "separators": ""
+        },
+        "outputAnchors": [
+          {
+            "id": "recursiveCharacterTextSplitter_0-output-recursiveCharacterTextSplitter-RecursiveCharacterTextSplitter|TextSplitter|BaseDocumentTransformer|Runnable",
+            "name": "recursiveCharacterTextSplitter",
+            "label": "RecursiveCharacterTextSplitter",
+            "description": "Split documents recursively by different characters - starting with \"\\n\\n\", then \"\\n\", then \" \"",
+            "type": "RecursiveCharacterTextSplitter | TextSplitter | BaseDocumentTransformer | Runnable"
+          }
+        ],
+        "outputs": {},
+        "selected": false
+      },
+      "width": 300,
+      "height": 437,
+      "selected": false,
+      "positionAbsolute": {
+        "x": -1150,
+        "y": -425
+      },
+      "dragging": false
+    },
+    {
+      "id": "huggingFaceInferenceEmbeddings_0",
+      "position": {
+        "x": -775,
+        "y": -75
+      },
+      "type": "customNode",
+      "data": {
+        "id": "huggingFaceInferenceEmbeddings_0",
+        "label": "HuggingFace Inference Embedding",
+        "version": 1,
+        "name": "huggingFaceInferenceEmbeddings",
+        "type": "HuggingFaceInferenceEmbeddings",
+        "baseClasses": [
+          "HuggingFaceInferenceEmbeddings",
+          "Embeddings"
+        ],
+        "category": "Embeddings",
+        "description": "HuggingFace Inference API to generate embeddings for a given text",
+        "inputParams": [
+          {
+            "label": "Connect Credential",
+            "name": "credential",
+            "type": "credential",
+            "credentialNames": [
+              "huggingFaceApi"
+            ],
+            "id": "huggingFaceInferenceEmbeddings_0-input-credential-credential",
+            "display": true
+          },
+          {
+            "label": "Model",
+            "name": "modelName",
+            "type": "string",
+            "description": "If using own inference endpoint, leave this blank",
+            "placeholder": "sentence-transformers/distilbert-base-nli-mean-tokens",
+            "optional": true,
+            "id": "huggingFaceInferenceEmbeddings_0-input-modelName-string",
+            "display": true
+          },
+          {
+            "label": "Endpoint",
+            "name": "endpoint",
+            "type": "string",
+            "placeholder": "https://xyz.eu-west-1.aws.endpoints.huggingface.cloud/sentence-transformers/all-MiniLM-L6-v2",
+            "description": "Using your own inference endpoint",
+            "optional": true,
+            "id": "huggingFaceInferenceEmbeddings_0-input-endpoint-string",
+            "display": true
+          }
+        ],
+        "inputAnchors": [],
+        "inputs": {
+          "modelName": "sentence-transformers/all-MiniLM-L6-v2",
+          "endpoint": ""
+        },
+        "outputAnchors": [
+          {
+            "id": "huggingFaceInferenceEmbeddings_0-output-huggingFaceInferenceEmbeddings-HuggingFaceInferenceEmbeddings|Embeddings",
+            "name": "huggingFaceInferenceEmbeddings",
+            "label": "HuggingFaceInferenceEmbeddings",
+            "description": "HuggingFace Inference API to generate embeddings for a given text",
+            "type": "HuggingFaceInferenceEmbeddings | Embeddings"
+          }
+        ],
+        "outputs": {},
+        "selected": false
+      },
+      "width": 300,
+      "height": 480,
+      "selected": false,
+      "positionAbsolute": {
+        "x": -775,
+        "y": -75
+      },
+      "dragging": false
+    },
+    {
+      "id": "memoryVectorStore_0",
+      "position": {
+        "x": -350,
+        "y": -600
+      },
+      "type": "customNode",
+      "data": {
+        "id": "memoryVectorStore_0",
+        "label": "In-Memory Vector Store",
+        "version": 1,
+        "name": "memoryVectorStore",
+        "type": "Memory",
+        "baseClasses": [
+          "Memory",
+          "VectorStoreRetriever",
+          "BaseRetriever"
+        ],
+        "category": "Vector Stores",
+        "description": "In-memory vectorstore that stores embeddings and does an exact, linear search for the most similar embeddings.",
+        "inputParams": [
+          {
+            "label": "Top K",
+            "name": "topK",
+            "description": "Number of top results to fetch. Default to 4",
+            "placeholder": "4",
+            "type": "number",
+            "optional": true,
+            "id": "memoryVectorStore_0-input-topK-number",
+            "display": true
+          }
+        ],
+        "inputAnchors": [
+          {
+            "label": "Document",
+            "name": "document",
+            "type": "Document",
+            "list": true,
+            "optional": true,
+            "id": "memoryVectorStore_0-input-document-Document",
+            "display": true
+          },
+          {
+            "label": "Embeddings",
+            "name": "embeddings",
+            "type": "Embeddings",
+            "id": "memoryVectorStore_0-input-embeddings-Embeddings",
+            "display": true
+          }
+        ],
+        "inputs": {
+          "document": [
+            "{{pdfFile_0.data.instance}}"
+          ],
+          "embeddings": "{{huggingFaceInferenceEmbeddings_0.data.instance}}",
+          "topK": "3"
+        },
+        "outputAnchors": [
+          {
+            "name": "output",
+            "label": "Output",
+            "type": "options",
+            "description": "",
+            "options": [
+              {
+                "id": "memoryVectorStore_0-output-retriever-Memory|VectorStoreRetriever|BaseRetriever",
+                "name": "retriever",
+                "label": "Memory Retriever",
+                "description": "",
+                "type": "Memory | VectorStoreRetriever | BaseRetriever"
+              },
+              {
+                "id": "memoryVectorStore_0-output-vectorStore-Memory|VectorStore",
+                "name": "vectorStore",
+                "label": "Memory Vector Store",
+                "description": "",
+                "type": "Memory | VectorStore"
+              }
+            ],
+            "default": "retriever"
+          }
+        ],
+        "outputs": {
+          "output": "retriever"
+        },
+        "selected": false
+      },
+      "width": 300,
+      "height": 413,
+      "selected": false,
+      "positionAbsolute": {
+        "x": -350,
+        "y": -600
+      },
+      "dragging": false
+    },
+    {
+      "id": "chatGoogleGenerativeAI_0",
+      "position": {
+        "x": 400,
+        "y": -600
+      },
+      "type": "customNode",
+      "data": {
+        "id": "chatGoogleGenerativeAI_0",
+        "label": "Google Gemini",
+        "version": 3.1,
+        "name": "chatGoogleGenerativeAI",
+        "type": "ChatGoogleGenerativeAI",
+        "baseClasses": [
+          "ChatGoogleGenerativeAI",
+          "ChatGoogleGenerativeAI",
+          "BaseChatModel",
+          "BaseLanguageModel",
+          "Runnable"
+        ],
+        "category": "Chat Models",
+        "description": "Wrapper around Google Gemini large language models that use the Chat endpoint",
+        "inputParams": [
+          {
+            "label": "Connect Credential",
+            "name": "credential",
+            "type": "credential",
+            "credentialNames": [
+              "googleGenerativeAI"
+            ],
+            "optional": false,
+            "description": "Google Generative AI credential.",
+            "id": "chatGoogleGenerativeAI_0-input-credential-credential",
+            "display": true
+          },
+          {
+            "label": "Model Name",
+            "name": "modelName",
+            "type": "asyncOptions",
+            "loadMethod": "listModels",
+            "default": "gemini-1.5-flash-latest",
+            "id": "chatGoogleGenerativeAI_0-input-modelName-asyncOptions",
+            "display": true
+          },
+          {
+            "label": "Custom Model Name",
+            "name": "customModelName",
+            "type": "string",
+            "placeholder": "gemini-1.5-pro-exp-0801",
+            "description": "Custom model name to use. If provided, it will override the model selected",
+            "additionalParams": true,
+            "optional": true,
+            "id": "chatGoogleGenerativeAI_0-input-customModelName-string",
+            "display": true
+          },
+          {
+            "label": "Temperature",
+            "name": "temperature",
+            "type": "number",
+            "step": 0.1,
+            "default": 0.9,
+            "optional": true,
+            "id": "chatGoogleGenerativeAI_0-input-temperature-number",
+            "display": true
+          },
+          {
+            "label": "Streaming",
+            "name": "streaming",
+            "type": "boolean",
+            "default": true,
+            "optional": true,
+            "additionalParams": true,
+            "id": "chatGoogleGenerativeAI_0-input-streaming-boolean",
+            "display": true
+          },
+          {
+            "label": "Allow Image Uploads",
+            "name": "allowImageUploads",
+            "type": "boolean",
+            "description": "Allow image input. Refer to the <a href=\"https://docs.flowiseai.com/using-flowise/uploads#image\" target=\"_blank\">docs</a> for more details.",
+            "default": false,
+            "optional": true,
+            "id": "chatGoogleGenerativeAI_0-input-allowImageUploads-boolean",
+            "display": true
+          },
+          {
+            "label": "Thinking Budget",
+            "name": "thinkingBudget",
+            "type": "number",
+            "description": "Guides the number of thinking tokens. -1 for dynamic, 0 to disable, or positive integer (Gemini 2.5 models).",
+            "step": 1,
+            "optional": true,
+            "additionalParams": true,
+            "show": {
+              "modelName": [
+                "gemini-2.5-pro",
+                "gemini-2.5-flash",
+                "gemini-2.5-flash-lite"
+              ]
+            },
+            "id": "chatGoogleGenerativeAI_0-input-thinkingBudget-number",
+            "display": true
+          },
+          {
+            "label": "Thinking Level",
+            "name": "thinkingLevel",
+            "type": "options",
+            "description": "Adjust the amount of reasoning effort based on the complexity of the user request",
+            "options": [
+              {
+                "label": "Low",
+                "name": "LOW"
+              },
+              {
+                "label": "Medium",
+                "name": "MEDIUM"
+              },
+              {
+                "label": "High",
+                "name": "HIGH"
+              }
+            ],
+            "optional": true,
+            "additionalParams": true,
+            "show": {
+              "modelName": [
+                "gemini-3.1-pro-preview",
+                "gemini-3.1-flash-lite-preview",
+                "gemini-3-flash-preview"
+              ]
+            },
+            "id": "chatGoogleGenerativeAI_0-input-thinkingLevel-options",
+            "display": false
+          },
+          {
+            "label": "Max Output Tokens",
+            "name": "maxOutputTokens",
+            "type": "number",
+            "step": 1,
+            "optional": true,
+            "additionalParams": true,
+            "id": "chatGoogleGenerativeAI_0-input-maxOutputTokens-number",
+            "display": true
+          },
+          {
+            "label": "Top Probability",
+            "name": "topP",
+            "type": "number",
+            "step": 0.1,
+            "optional": true,
+            "additionalParams": true,
+            "id": "chatGoogleGenerativeAI_0-input-topP-number",
+            "display": true
+          },
+          {
+            "label": "Top Next Highest Probability Tokens",
+            "name": "topK",
+            "type": "number",
+            "description": "Decode using top-k sampling: consider the set of top_k most probable tokens. Must be positive",
+            "step": 1,
+            "optional": true,
+            "additionalParams": true,
+            "id": "chatGoogleGenerativeAI_0-input-topK-number",
+            "display": true
+          },
+          {
+            "label": "Safety Settings",
+            "name": "safetySettings",
+            "type": "array",
+            "description": "Safety settings for the model. Refer to the <a href=\"https://ai.google.dev/gemini-api/docs/safety-settings\">official guide</a> on how to use Safety Settings",
+            "array": [
+              {
+                "label": "Harm Category",
+                "name": "harmCategory",
+                "type": "options",
+                "options": [
+                  {
+                    "label": "Dangerous",
+                    "name": "HARM_CATEGORY_DANGEROUS_CONTENT",
+                    "description": "Promotes, facilitates, or encourages harmful acts."
+                  },
+                  {
+                    "label": "Harassment",
+                    "name": "HARM_CATEGORY_HARASSMENT",
+                    "description": "Negative or harmful comments targeting identity and/or protected attributes."
+                  },
+                  {
+                    "label": "Hate Speech",
+                    "name": "HARM_CATEGORY_HATE_SPEECH",
+                    "description": "Content that is rude, disrespectful, or profane."
+                  },
+                  {
+                    "label": "Sexually Explicit",
+                    "name": "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+                    "description": "Contains references to sexual acts or other lewd content."
+                  },
+                  {
+                    "label": "Civic Integrity",
+                    "name": "HARM_CATEGORY_CIVIC_INTEGRITY",
+                    "description": "Election-related queries."
+                  }
+                ]
+              },
+              {
+                "label": "Harm Block Threshold",
+                "name": "harmBlockThreshold",
+                "type": "options",
+                "options": [
+                  {
+                    "label": "None",
+                    "name": "BLOCK_NONE",
+                    "description": "Always show regardless of probability of unsafe content"
+                  },
+                  {
+                    "label": "Only High",
+                    "name": "BLOCK_ONLY_HIGH",
+                    "description": "Block when high probability of unsafe content"
+                  },
+                  {
+                    "label": "Medium and Above",
+                    "name": "BLOCK_MEDIUM_AND_ABOVE",
+                    "description": "Block when medium or high probability of unsafe content"
+                  },
+                  {
+                    "label": "Low and Above",
+                    "name": "BLOCK_LOW_AND_ABOVE",
+                    "description": "Block when low, medium or high probability of unsafe content"
+                  },
+                  {
+                    "label": "Threshold Unspecified (Default Threshold)",
+                    "name": "HARM_BLOCK_THRESHOLD_UNSPECIFIED",
+                    "description": "Threshold is unspecified, block using default threshold"
+                  }
+                ]
+              }
+            ],
+            "optional": true,
+            "additionalParams": true,
+            "id": "chatGoogleGenerativeAI_0-input-safetySettings-array",
+            "display": true
+          },
+          {
+            "label": "Base URL",
+            "name": "baseUrl",
+            "type": "string",
+            "description": "Base URL for the API. Leave empty to use the default.",
+            "optional": true,
+            "additionalParams": true,
+            "id": "chatGoogleGenerativeAI_0-input-baseUrl-string",
+            "display": true
+          }
+        ],
+        "inputAnchors": [
+          {
+            "label": "Cache",
+            "name": "cache",
+            "type": "BaseCache",
+            "optional": true,
+            "id": "chatGoogleGenerativeAI_0-input-cache-BaseCache",
+            "display": true
+          }
+        ],
+        "inputs": {
+          "cache": "",
+          "modelName": "gemini-2.5-flash",
+          "customModelName": "",
+          "temperature": "0.3",
+          "streaming": true,
+          "allowImageUploads": true,
+          "thinkingBudget": "",
+          "thinkingLevel": "",
+          "maxOutputTokens": "",
+          "topP": "",
+          "topK": "",
+          "safetySettings": "",
+          "baseUrl": ""
+        },
+        "outputAnchors": [
+          {
+            "id": "chatGoogleGenerativeAI_0-output-chatGoogleGenerativeAI-ChatGoogleGenerativeAI|ChatGoogleGenerativeAI|BaseChatModel|BaseLanguageModel|Runnable",
+            "name": "chatGoogleGenerativeAI",
+            "label": "ChatGoogleGenerativeAI",
+            "description": "Wrapper around Google Gemini large language models that use the Chat endpoint",
+            "type": "ChatGoogleGenerativeAI | ChatGoogleGenerativeAI | BaseChatModel | BaseLanguageModel | Runnable"
+          }
+        ],
+        "outputs": {},
+        "selected": false
+      },
+      "width": 300,
+      "height": 677,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 400,
+        "y": -600
+      },
+      "dragging": false
+    },
+    {
+      "id": "bufferWindowMemory_0",
+      "position": {
+        "x": -350,
+        "y": -125
+      },
+      "type": "customNode",
+      "data": {
+        "id": "bufferWindowMemory_0",
+        "label": "Buffer Window Memory",
+        "version": 2,
+        "name": "bufferWindowMemory",
+        "type": "BufferWindowMemory",
+        "baseClasses": [
+          "BufferWindowMemory",
+          "BaseChatMemory",
+          "BaseMemory"
+        ],
+        "category": "Memory",
+        "description": "Uses a window of size k to surface the last k back-and-forth to use as memory",
+        "inputParams": [
+          {
+            "label": "Size",
+            "name": "k",
+            "type": "number",
+            "default": "4",
+            "description": "Window of size k to surface the last k back-and-forth to use as memory.",
+            "id": "bufferWindowMemory_0-input-k-number",
+            "display": true
+          },
+          {
+            "label": "Session Id",
+            "name": "sessionId",
+            "type": "string",
+            "description": "If not specified, a random id will be used. Learn <a target=\"_blank\" href=\"https://docs.flowiseai.com/memory#ui-and-embedded-chat\">more</a>",
+            "default": "",
+            "optional": true,
+            "additionalParams": true,
+            "id": "bufferWindowMemory_0-input-sessionId-string",
+            "display": true
+          },
+          {
+            "label": "Memory Key",
+            "name": "memoryKey",
+            "type": "string",
+            "default": "chat_history",
+            "additionalParams": true,
+            "id": "bufferWindowMemory_0-input-memoryKey-string",
+            "display": true
+          }
+        ],
+        "inputAnchors": [],
+        "inputs": {
+          "k": "5",
+          "sessionId": "",
+          "memoryKey": "chat_history"
+        },
+        "outputAnchors": [
+          {
+            "id": "bufferWindowMemory_0-output-bufferWindowMemory-BufferWindowMemory|BaseChatMemory|BaseMemory",
+            "name": "bufferWindowMemory",
+            "label": "BufferWindowMemory",
+            "description": "Uses a window of size k to surface the last k back-and-forth to use as memory",
+            "type": "BufferWindowMemory | BaseChatMemory | BaseMemory"
+          }
+        ],
+        "outputs": {},
+        "selected": false
+      },
+      "width": 300,
+      "height": 338,
+      "selected": false,
+      "dragging": false,
+      "positionAbsolute": {
+        "x": -350,
+        "y": -125
+      }
+    },
+    {
+      "id": "retrieverTool_0",
+      "position": {
+        "x": 25,
+        "y": -550
+      },
+      "type": "customNode",
+      "data": {
+        "id": "retrieverTool_0",
+        "label": "Retriever Tool",
+        "version": 3,
+        "name": "retrieverTool",
+        "type": "RetrieverTool",
+        "baseClasses": [
+          "RetrieverTool",
+          "DynamicTool",
+          "Tool",
+          "StructuredTool",
+          "Runnable"
+        ],
+        "category": "Tools",
+        "description": "Use a retriever as allowed tool for agent",
+        "inputParams": [
+          {
+            "label": "Retriever Name",
+            "name": "name",
+            "type": "string",
+            "placeholder": "search_state_of_union",
+            "id": "retrieverTool_0-input-name-string",
+            "display": true
+          },
+          {
+            "label": "Retriever Description",
+            "name": "description",
+            "type": "string",
+            "description": "When should agent uses to retrieve documents",
+            "rows": 3,
+            "placeholder": "Searches and returns documents regarding the state-of-the-union.",
+            "id": "retrieverTool_0-input-description-string",
+            "display": true
+          },
+          {
+            "label": "Return Source Documents",
+            "name": "returnSourceDocuments",
+            "type": "boolean",
+            "optional": true,
+            "id": "retrieverTool_0-input-returnSourceDocuments-boolean",
+            "display": true
+          },
+          {
+            "label": "Additional Metadata Filter",
+            "name": "retrieverToolMetadataFilter",
+            "type": "json",
+            "description": "Add additional metadata filter on top of the existing filter from vector store",
+            "optional": true,
+            "additionalParams": true,
+            "hint": {
+              "label": "What can you filter?",
+              "value": "Add additional filters to vector store. You can also filter with flow config, including the current \"state\":\n- `$flow.sessionId`\n- `$flow.chatId`\n- `$flow.chatflowId`\n- `$flow.input`\n- `$flow.state`\n"
+            },
+            "acceptVariable": true,
+            "id": "retrieverTool_0-input-retrieverToolMetadataFilter-json",
+            "display": true
+          }
+        ],
+        "inputAnchors": [
+          {
+            "label": "Retriever",
+            "name": "retriever",
+            "type": "BaseRetriever",
+            "id": "retrieverTool_0-input-retriever-BaseRetriever",
+            "display": true
+          }
+        ],
+        "inputs": {
+          "name": "pdf_search",
+          "description": "Searches uploaded PDF documents and retrieves relevant chunks.",
+          "retriever": "{{memoryVectorStore_0.data.instance}}",
+          "returnSourceDocuments": true,
+          "retrieverToolMetadataFilter": ""
+        },
+        "outputAnchors": [
+          {
+            "id": "retrieverTool_0-output-retrieverTool-RetrieverTool|DynamicTool|Tool|StructuredTool|Runnable",
+            "name": "retrieverTool",
+            "label": "RetrieverTool",
+            "description": "Use a retriever as allowed tool for agent",
+            "type": "RetrieverTool | DynamicTool | Tool | StructuredTool | Runnable"
+          }
+        ],
+        "outputs": {},
+        "selected": false
+      },
+      "width": 300,
+      "height": 662,
+      "selected": false,
+      "dragging": false,
+      "positionAbsolute": {
+        "x": 25,
+        "y": -550
+      }
+    },
+    {
+      "id": "toolAgent_0",
+      "position": {
+        "x": 800,
+        "y": -525
+      },
+      "type": "customNode",
+      "data": {
+        "id": "toolAgent_0",
+        "label": "Tool Agent",
+        "version": 2,
+        "name": "toolAgent",
+        "type": "AgentExecutor",
+        "baseClasses": [
+          "AgentExecutor",
+          "BaseChain",
+          "Runnable"
+        ],
+        "category": "Agents",
+        "description": "Agent that uses Function Calling to pick the tools and args to call",
+        "inputParams": [
+          {
+            "label": "System Message",
+            "name": "systemMessage",
+            "type": "string",
+            "default": "You are a helpful AI assistant.",
+            "description": "If Chat Prompt Template is provided, this will be ignored",
+            "rows": 4,
+            "optional": true,
+            "additionalParams": true,
+            "id": "toolAgent_0-input-systemMessage-string",
+            "display": true
+          },
+          {
+            "label": "Max Iterations",
+            "name": "maxIterations",
+            "type": "number",
+            "optional": true,
+            "additionalParams": true,
+            "id": "toolAgent_0-input-maxIterations-number",
+            "display": true
+          },
+          {
+            "label": "Enable Detailed Streaming",
+            "name": "enableDetailedStreaming",
+            "type": "boolean",
+            "default": false,
+            "description": "Stream detailed intermediate steps during agent execution",
+            "optional": true,
+            "additionalParams": true,
+            "id": "toolAgent_0-input-enableDetailedStreaming-boolean",
+            "display": true
+          }
+        ],
+        "inputAnchors": [
+          {
+            "label": "Tools",
+            "name": "tools",
+            "type": "Tool",
+            "list": true,
+            "id": "toolAgent_0-input-tools-Tool",
+            "display": true
+          },
+          {
+            "label": "Memory",
+            "name": "memory",
+            "type": "BaseChatMemory",
+            "id": "toolAgent_0-input-memory-BaseChatMemory",
+            "display": true
+          },
+          {
+            "label": "Tool Calling Chat Model",
+            "name": "model",
+            "type": "BaseChatModel",
+            "description": "Only compatible with models that are capable of function calling: ChatOpenAI, ChatMistral, ChatAnthropic, ChatGoogleGenerativeAI, ChatVertexAI, GroqChat",
+            "id": "toolAgent_0-input-model-BaseChatModel",
+            "display": true
+          },
+          {
+            "label": "Chat Prompt Template",
+            "name": "chatPromptTemplate",
+            "type": "ChatPromptTemplate",
+            "description": "Override existing prompt with Chat Prompt Template. Human Message must includes {input} variable",
+            "optional": true,
+            "id": "toolAgent_0-input-chatPromptTemplate-ChatPromptTemplate",
+            "display": true
+          },
+          {
+            "label": "Input Moderation",
+            "description": "Detect text that could generate harmful output and prevent it from being sent to the language model",
+            "name": "inputModeration",
+            "type": "Moderation",
+            "optional": true,
+            "list": true,
+            "id": "toolAgent_0-input-inputModeration-Moderation",
+            "display": true
+          }
+        ],
+        "inputs": {
+          "tools": [
+            "{{retrieverTool_0.data.instance}}"
+          ],
+          "memory": "{{bufferWindowMemory_0.data.instance}}",
+          "model": "{{chatGoogleGenerativeAI_0.data.instance}}",
+          "chatPromptTemplate": "",
+          "systemMessage": "You are a helpful AI assistant.",
+          "inputModeration": "",
+          "maxIterations": "",
+          "enableDetailedStreaming": ""
+        },
+        "outputAnchors": [
+          {
+            "id": "toolAgent_0-output-toolAgent-AgentExecutor|BaseChain|Runnable",
+            "name": "toolAgent",
+            "label": "AgentExecutor",
+            "description": "Agent that uses Function Calling to pick the tools and args to call",
+            "type": "AgentExecutor | BaseChain | Runnable"
+          }
+        ],
+        "outputs": {},
+        "selected": false
+      },
+      "width": 300,
+      "height": 493,
+      "positionAbsolute": {
+        "x": 800,
+        "y": -525
+      },
+      "selected": false,
+      "dragging": false
+    }
+  ],
+  "edges": [
+    {
+      "source": "recursiveCharacterTextSplitter_0",
+      "sourceHandle": "recursiveCharacterTextSplitter_0-output-recursiveCharacterTextSplitter-RecursiveCharacterTextSplitter|TextSplitter|BaseDocumentTransformer|Runnable",
+      "target": "pdfFile_0",
+      "targetHandle": "pdfFile_0-input-textSplitter-TextSplitter",
+      "type": "buttonedge",
+      "id": "recursiveCharacterTextSplitter_0-recursiveCharacterTextSplitter_0-output-recursiveCharacterTextSplitter-RecursiveCharacterTextSplitter|TextSplitter|BaseDocumentTransformer|Runnable-pdfFile_0-pdfFile_0-input-textSplitter-TextSplitter"
+    },
+    {
+      "source": "pdfFile_0",
+      "sourceHandle": "pdfFile_0-output-document-Document|json",
+      "target": "memoryVectorStore_0",
+      "targetHandle": "memoryVectorStore_0-input-document-Document",
+      "type": "buttonedge",
+      "id": "pdfFile_0-pdfFile_0-output-document-Document|json-memoryVectorStore_0-memoryVectorStore_0-input-document-Document"
+    },
+    {
+      "source": "huggingFaceInferenceEmbeddings_0",
+      "sourceHandle": "huggingFaceInferenceEmbeddings_0-output-huggingFaceInferenceEmbeddings-HuggingFaceInferenceEmbeddings|Embeddings",
+      "target": "memoryVectorStore_0",
+      "targetHandle": "memoryVectorStore_0-input-embeddings-Embeddings",
+      "type": "buttonedge",
+      "id": "huggingFaceInferenceEmbeddings_0-huggingFaceInferenceEmbeddings_0-output-huggingFaceInferenceEmbeddings-HuggingFaceInferenceEmbeddings|Embeddings-memoryVectorStore_0-memoryVectorStore_0-input-embeddings-Embeddings"
+    },
+    {
+      "source": "memoryVectorStore_0",
+      "sourceHandle": "memoryVectorStore_0-output-retriever-Memory|VectorStoreRetriever|BaseRetriever",
+      "target": "retrieverTool_0",
+      "targetHandle": "retrieverTool_0-input-retriever-BaseRetriever",
+      "type": "buttonedge",
+      "id": "memoryVectorStore_0-memoryVectorStore_0-output-retriever-Memory|VectorStoreRetriever|BaseRetriever-retrieverTool_0-retrieverTool_0-input-retriever-BaseRetriever"
+    },
+    {
+      "source": "bufferWindowMemory_0",
+      "sourceHandle": "bufferWindowMemory_0-output-bufferWindowMemory-BufferWindowMemory|BaseChatMemory|BaseMemory",
+      "target": "toolAgent_0",
+      "targetHandle": "toolAgent_0-input-memory-BaseChatMemory",
+      "type": "buttonedge",
+      "id": "bufferWindowMemory_0-bufferWindowMemory_0-output-bufferWindowMemory-BufferWindowMemory|BaseChatMemory|BaseMemory-toolAgent_0-toolAgent_0-input-memory-BaseChatMemory"
+    },
+    {
+      "source": "retrieverTool_0",
+      "sourceHandle": "retrieverTool_0-output-retrieverTool-RetrieverTool|DynamicTool|Tool|StructuredTool|Runnable",
+      "target": "toolAgent_0",
+      "targetHandle": "toolAgent_0-input-tools-Tool",
+      "type": "buttonedge",
+      "id": "retrieverTool_0-retrieverTool_0-output-retrieverTool-RetrieverTool|DynamicTool|Tool|StructuredTool|Runnable-toolAgent_0-toolAgent_0-input-tools-Tool"
+    },
+    {
+      "source": "chatGoogleGenerativeAI_0",
+      "sourceHandle": "chatGoogleGenerativeAI_0-output-chatGoogleGenerativeAI-ChatGoogleGenerativeAI|ChatGoogleGenerativeAI|BaseChatModel|BaseLanguageModel|Runnable",
+      "target": "toolAgent_0",
+      "targetHandle": "toolAgent_0-input-model-BaseChatModel",
+      "type": "buttonedge",
+      "id": "chatGoogleGenerativeAI_0-chatGoogleGenerativeAI_0-output-chatGoogleGenerativeAI-ChatGoogleGenerativeAI|ChatGoogleGenerativeAI|BaseChatModel|BaseLanguageModel|Runnable-toolAgent_0-toolAgent_0-input-model-BaseChatModel"
+    }
+  ]
+}
